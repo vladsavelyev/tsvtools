@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 from setuptools import setup
-import release
+import releazit
 
 import tsvtools
 package_name = tsvtools.__name__
 
-version = release.get_version(package_name)
+version = releazit.get_version(package_name)
 
 setup(
     name=package_name,
@@ -19,7 +19,7 @@ setup(
     packages=[package_name],
     include_package_data=True,
     zip_safe=False,
-    install_requires=release.get_reqs(),
+    install_requires=releazit.get_reqs(),
     scripts=['scripts/tsvtools', 'scripts/tsv', 'scripts/cols'],
     classifiers=[
         'Environment :: Console',
