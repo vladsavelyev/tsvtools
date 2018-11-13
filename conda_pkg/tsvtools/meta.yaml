@@ -23,13 +23,11 @@ requirements:
     {% endfor %}
 
 test:
-  imports:
-    - release
   commands:
-    - release --help
+    - tsvtools view --help
 
 about:
-  home: data.url
+  home: {{ data.url }}
   license: GNU General Public License v3 (GPLv3)
   license_family: GPL3
-  summary: data.description
+  summary: {{ data.description }}

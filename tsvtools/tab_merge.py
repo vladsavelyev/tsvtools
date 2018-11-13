@@ -5,7 +5,7 @@ Merges tab-delimited files together, combining common columns
 import sys
 import os
 import gzip
-from tsvtools.support import filenames_to_uniq
+from tsvtools.libs import filenames_to_uniq
 
 
 class MergeException(Exception):
@@ -209,7 +209,7 @@ def merge_files(fnames,common_cols,uncommon_cols, keycols, noheader=False,collat
     for f in files:
         f.close()
         
-def usage():
+def help():
     print(__doc__)
     print("""\
 Usage: %s {opts} common_cols merge_cols files
@@ -243,6 +243,10 @@ Valid column definitions:
     1-4,5
 
 """ % os.path.basename(sys.argv[0]))
+
+def usage():
+    help()
+    sys.exit(1)
 
 def _split_cols(arg):
     ret=[]
@@ -280,8 +284,8 @@ def main(argv):
     
     for arg in argv:
         if arg == '-h':
-            usage()
-            sys.exit(1)
+            help()
+            sys.exit(0)
         if last == '-keycols':
             keycols = _split_cols(arg)
             last = None

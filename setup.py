@@ -5,14 +5,14 @@ import release
 import tsvtools
 package_name = tsvtools.__name__
 
-version = release.get_cur_version(package_name)
+version = release.get_version(package_name)
 
 setup(
     name=package_name,
     version=version,
     author='Vlad Saveliev',
     author_email='vladislav.sav@gmail.com',
-    description='Utilities for operating with tab-separated files: view, filter, reorder',
+    description='Utilities for operating with tab-separated files: viewing, filtering, reordering',
     keywords='bioinformatics',
     url='https://github.com/vladsaveliev/' + package_name,
     license='GPLv3',
@@ -20,7 +20,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=release.get_reqs(),
-    scripts=['scripts/release'],
+    scripts=['scripts/tsvtools', 'scripts/tsv', 'scripts/cols'],
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Science/Research',

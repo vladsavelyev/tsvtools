@@ -6,9 +6,9 @@ Filters a tab-delmited file based upon configurable critera
 import sys
 import os
 import gzip
-from tsvtools.support import gzip_opener
+from tsvtools.libs import gzip_opener
 
-def usage():
+def help():
     print(__doc__)
     print("""\
 Usage: %s -header file.txt {criteria}
@@ -34,6 +34,9 @@ contains
 
 All comment lines are printed as-is.
 """ % os.path.basename(sys.argv[0]))
+
+def usage():
+    help()
     sys.exit(1)
 
 class Criteria():
@@ -113,6 +116,10 @@ def filter_file(fname, criteria, headered):
         f.close()
 
 def main(argv):
+    if argv[0] in ['-h','--help']:
+        help()
+        sys.exit(0)
+
     headered = False
     fname = '-'
     criteria_args = []
@@ -128,7 +135,7 @@ def main(argv):
     
     if not criteria or not fname:
         usage()
-    
+
     filter_file(fname, criteria, headered)
                 
 if __name__ == '__main__':

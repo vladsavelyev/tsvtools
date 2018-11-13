@@ -24,11 +24,9 @@ install:
   - conda install --use-local ${PACKAGE_NAME}
 
 script:
-  - python -c "from release import get_version, increment_version"
-  - release --help
+  - tsvtools view --help
 
 deploy:
-  matrix:
   # Deploy to anaconda.org
   - provider: script
     script:
@@ -39,10 +37,10 @@ deploy:
     skip_cleanup: true
 
   # Deploy to pypi
-  - provider: pypi
-    on:
-      tags: true
-    skip_cleanup: true
-    user: vladsaveliev
-    password:
-      secure: DbnJ6gricHCK4Tbli5SZP2uYggZc5RUzE2E8CZ2RQCC50/+6SBiSuZVr06Kv36mvutB2oFD1Ci3N7tPlUhlItq48zPxHNA8rDHxw+4RaU6DLhzDjxZZS/J/h2Lyo7pbV5dg+/fLMlym9zjRSzs/bEyNzqp00qcxZl8ajY6BN8kcqlFZkamOJhxGPPyIrswZgr19AdqELyTlaTRgKgIs9MHSDqvWzZKXQIfkrX9UK2OJXmsYbMzDTFIV6WTd2he6IBq/hgCnxIHpusOQBUCNMB/40642YM6l7hGyc1BKcOSQZzBLLwuaWjYcYBF4UThxuJ+o4+vghqdWH2ikGXeyz1G26P/kZra0va0QDiQNCjRq5DFVLprfVKXJbJ3YYMD29JDGVyZv0nywuOMsBj14y4wIYXllgO0iW6dW/aCal60CmC8Khi1cDA7r3tlgvnRBmBdcpQZ6D/CNCNdq/u/bVC43aPMIIOqK2XHo7SyQ421L7a8HYisSpg1KZX3SYxSxZBfYb/xiKNQZpVFpmXA6PFdlL76zUUGk6ZjqjCi5ljXvwC31obX1vYK871VvmffUrrVJI4WDeYaeQwAfB04bd/DPpprpZdnnm8g51HMRWUZb7FDf2a7aBQzTw995lqnFc8awRK61UdRoM69t5NcVZQxhYfAr5S9HAzqJwOl2UcpQ=
+#  - provider: pypi
+#    on:
+#      tags: true
+#    skip_cleanup: true
+#    user: vladsaveliev
+#    password:
+#      secure: PhYNdc0V+0ZAFKztRtapx50tRxhpYakjeK+Vc9PI/1fn3235zGf+klaEKke/bTP3AHorxYvHgBU3Lr7lPaEncy1Gw4vMzOhD/dxOIdUNIagHDWKK1WaTC9q61Qaw9p8yNyYCOXq5bEUOnKZp7l/v4tCX4iTQ5payu0BFdSiI2XOCztJzIGwFi5wZ5YA6c+8681yw+L/i9XFA+oE31TeEox9wvvsUuDBB8PEWkv70eTuGCA39r0f45ZWwdZJmqbmYsHU5qGe2qYAvxRyFhVVdxkkpWRyMXxcvoVy6BM1aVem7lQeXoGO/EMBV3d3DnOlf6GojKLbakl6l0C7oJaqSK8KEYJdQOSrC43yfGOH7Hn5949LIS15lN5t27uciUGagPjdzUoqPreXb31yn/EyxwbkxezuvYt2Jh+B7U/fzjoPPE8iF++WKdLJCUAREIFfu9gS/N1AIE4BB0VFNq+VwcSrvJWklDQ+hDoIMIcxMFQBeTAGWKzOcw5AaIH0aEiTa+mBEb0iYjGIqcxYU37hypplbu1B5d9CY9E2wraVRfIkLQCKdrSLhCQA26yWfdeZ43kqVsO7NKUlaHYvyudCajjraRWOuLEz0U/k7eFQcvus2QA4ZuSzYvw90r23cUARsBYujQ6IPoD1qIrKN8HONs9WBO1PygPHBKnnVY9f6wZ0=

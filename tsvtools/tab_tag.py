@@ -6,7 +6,7 @@ Adds a new constant column to each line in a tab-delimited file
 import sys
 import os
 
-from tsvtools.support import gzip_opener
+from tsvtools.libs import gzip_opener
 
 def tab_tag(fname, colname, colvalue, colidx, delim='\t', noheader=False):
     f = gzip_opener(fname).open()
@@ -27,7 +27,7 @@ def tab_tag(fname, colname, colvalue, colidx, delim='\t', noheader=False):
  
     f.close()
     
-def usage(msg=""):
+def help(msg=""):
     if msg:
         print(msg)
     print(__doc__)
@@ -40,11 +40,13 @@ Options:
     -name val   The name for this field (in header) (default: tag)
     -pos idx    Insert the new column as column #idx (default: 1)
     -noheader   This file doesn't have a header
-
-
-""" % os.path.basename(sys.argv[0]))
-    sys.exit(1)
     
+""" % os.path.basename(sys.argv[0]))
+
+def usage():
+    help()
+    sys.exit(1)
+
 def main(argv):
     fname = None
     delim = '\t'
@@ -57,7 +59,8 @@ def main(argv):
 
     for arg in argv:
         if arg in ['-h','--help']:
-            usage()
+            help()
+            sys.exit(0)
         elif last == '-d':
             delim = arg
             last = None

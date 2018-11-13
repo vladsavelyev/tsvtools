@@ -13,9 +13,9 @@ This can then be fed into something like 'less' for paging
 import sys
 import os
 import math
-from tsvtools.support import gzip_opener
+from tsvtools.libs import gzip_opener
 
-def usage():
+def help():
     print(__doc__)
     print("""Usage: %s {opts} filename.tab
 
@@ -28,6 +28,9 @@ Options:
 -min size   The minimum length of a column (default: 0)
 
 """ % os.path.basename(sys.argv[0]))
+
+def usage():
+    help()
     sys.exit(1)
 
 def main(argv):
@@ -39,7 +42,8 @@ def main(argv):
     last = None
     for arg in argv:
         if arg in ['-h','--help']:
-            usage()
+            help()
+            sys.exit(0)
         elif last == '-l':
             preview_lines = int(arg)
             last = None
