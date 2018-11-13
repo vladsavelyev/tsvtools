@@ -13,12 +13,12 @@ build:
 requirements:
   build:
     - python ==3.6
-    {% for dep in data.install_requires %}
+    {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
   run:
     - python ==3.6
-    {% for dep in data.install_requires %}
+    {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
 
@@ -27,7 +27,7 @@ test:
     - tsvtools view --help
 
 about:
-  home: {{ data.url }}
-  license: GNU General Public License v3 (GPLv3)
+  home: "{{ data.url }}"
+  license: "GNU General Public License v3 (GPLv3)"
   license_family: GPL3
-  summary: {{ data.description }}
+  summary: "{{ data.description }}"
