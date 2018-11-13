@@ -1,2 +1,4 @@
 # tsvtools
-Utilities for tab-separated files: view, filter, reorder
+
+Utilities for tab-separated files: viewing, filtering, reordering.
+

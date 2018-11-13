@@ -1,0 +1,48 @@
+sudo: required
+
+language: python
+python:
+  - "3.6"  # required, otherwise conda will try to clash with py2 packages
+
+before_install:
+  - export PACKAGE_NAME=tsvutils
+
+  # Get and install anaconda (https://conda.io/docs/travis.html)
+  - wget -nv https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH=$HOME/miniconda/bin:$PATH
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no --set anaconda_upload no
+  - conda update -q conda
+  - conda info -a  # Useful for debugging any issues with conda
+
+install:
+  - conda config --add channels defaults --add channels vladsaveliev --add channels bioconda --add channels conda-forge
+  - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client click
+  # Building package
+  - conda build conda_pkg/${PACKAGE_NAME}
+  - conda install --use-local ${PACKAGE_NAME}
+
+script:
+  - python -c "from release import get_version, increment_version"
+  - release --help
+
+deploy:
+  matrix:
+  # Deploy to anaconda.org
+  - provider: script
+    script:
+      conda convert --platform osx-64 $HOME/miniconda/conda-bld/linux-64/${PACKAGE_NAME}-*.tar.bz2 --output-dir $HOME/miniconda/conda-bld/ && \
+      anaconda -t ${ANACONDA_TOKEN} upload $HOME/miniconda/conda-bld/**/${PACKAGE_NAME}-*.tar.bz2
+    on:
+      tags: true
+    skip_cleanup: true
+
+  # Deploy to pypi
+  - provider: pypi
+    on:
+      tags: true
+    skip_cleanup: true
+    user: vladsaveliev
+    password:
+      secure: DbnJ6gricHCK4Tbli5SZP2uYggZc5RUzE2E8CZ2RQCC50/+6SBiSuZVr06Kv36mvutB2oFD1Ci3N7tPlUhlItq48zPxHNA8rDHxw+4RaU6DLhzDjxZZS/J/h2Lyo7pbV5dg+/fLMlym9zjRSzs/bEyNzqp00qcxZl8ajY6BN8kcqlFZkamOJhxGPPyIrswZgr19AdqELyTlaTRgKgIs9MHSDqvWzZKXQIfkrX9UK2OJXmsYbMzDTFIV6WTd2he6IBq/hgCnxIHpusOQBUCNMB/40642YM6l7hGyc1BKcOSQZzBLLwuaWjYcYBF4UThxuJ+o4+vghqdWH2ikGXeyz1G26P/kZra0va0QDiQNCjRq5DFVLprfVKXJbJ3YYMD29JDGVyZv0nywuOMsBj14y4wIYXllgO0iW6dW/aCal60CmC8Khi1cDA7r3tlgvnRBmBdcpQZ6D/CNCNdq/u/bVC43aPMIIOqK2XHo7SyQ421L7a8HYisSpg1KZX3SYxSxZBfYb/xiKNQZpVFpmXA6PFdlL76zUUGk6ZjqjCi5ljXvwC31obX1vYK871VvmffUrrVJI4WDeYaeQwAfB04bd/DPpprpZdnnm8g51HMRWUZb7FDf2a7aBQzTw995lqnFc8awRK61UdRoM69t5NcVZQxhYfAr5S9HAzqJwOl2UcpQ=
