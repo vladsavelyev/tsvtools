@@ -8,16 +8,16 @@ source:
   path: ../../
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
-    - python ==3.6
+    - python ==3.7
     {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
   run:
-    - python ==3.6
+    - python ==3.7
     {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
