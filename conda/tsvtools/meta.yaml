@@ -1,33 +1,35 @@
-{% set data=load_setup_py_data() %}
+{% set data = load_setup_py_data() %}
 
 package:
   name: tsvtools
-  version: {{ data.version }}
+  version: {{ data['version'] }}
 
 source:
   path: ../../
 
 build:
-  number: 1
+  noarch: python
+  number: 0
 
 requirements:
   build:
-    - python ==3.7.*
+    - python >=3.6
     {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
   run:
-    - python ==3.7.*
+    - python >=3.6
     {% for dep in data.install_requires -%}
     - {{ dep.lower() }}
     {% endfor %}
 
 test:
+  imports:
+    - tsvtools
   commands:
     - tsvtools view --help
 
 about:
-  home: "{{ data.url }}"
-  license: "GNU General Public License v3 (GPLv3)"
-  license_family: GPL3
-  summary: "{{ data.description }}"
+  home: {{ data['url'] }}
+  license: {{ data['license'] }}
+  summary: {{ data['description'] }}

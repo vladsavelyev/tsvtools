@@ -1,25 +1,32 @@
 #!/usr/bin/env python
 from setuptools import setup
-import versionpy
 
-import tsvtools
-package_name = tsvtools.__name__
+pkg = 'tsvtools'
 
-version = versionpy.get_version(package_name)
+try:
+    import versionpy
+except ImportError:
+    res = input('Installation requires versionpy. Install it now? [Y/n]')
+    if res.lower().startswith('n'):
+        raise
+    os.system('pip install versionpy')
+    import versionpy
+
+version = versionpy.get_version(pkg)
 
 setup(
-    name=package_name,
+    name=pkg,
     version=version,
     author='Vlad Saveliev',
     author_email='vladislav.sav@gmail.com',
     description='Utilities for operating with tab-separated files: viewing, filtering, reordering',
     keywords='bioinformatics',
-    url='https://github.com/vladsaveliev/' + package_name,
+    url='https://github.com/vladsaveliev/' + pkg,
     license='GPLv3',
-    packages=[package_name],
+    packages=[pkg],
     include_package_data=True,
     zip_safe=False,
-    install_requires=versionpy.get_reqs(),
+    install_requires=['click', 'versionpy'],
     scripts=['scripts/tsvtools', 'scripts/tsv', 'scripts/cols'],
     classifiers=[
         'Environment :: Console',
