@@ -1,8 +1,8 @@
-{% set data = load_setup_py_data() %}
+{% set data=load_setup_py_data() %}
 
 package:
   name: tsvtools
-  version: {{ data['version'] }}
+  version: {{ data.version }}
 
 source:
   path: ../../
@@ -13,13 +13,13 @@ build:
 
 requirements:
   build:
-    - python >=3.6
-    {% for dep in data.install_requires -%}
+    - python {{ python }}
+    {% for dep in data.get("install_requires", []) -%}
     - {{ dep.lower() }}
     {% endfor %}
   run:
     - python >=3.6
-    {% for dep in data.install_requires -%}
+    {% for dep in data.get("install_requires", []) -%}
     - {{ dep.lower() }}
     {% endfor %}
 
@@ -32,4 +32,4 @@ test:
 about:
   home: {{ data['url'] }}
   license: {{ data['license'] }}
-  summary: {{ data['description'] }}
+  summary: "{{ data['description'] }}"
