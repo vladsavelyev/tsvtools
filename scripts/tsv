@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -z $2 ]
+if [[ -n $2 ]]
 then
-    tsvtools less -l $1 $2
+    tsvtools less -l "$1" "$2"
 else
-    tsvtools less -l 1000 $1
+    tsvtools less -l 1000 "$1"
 fi

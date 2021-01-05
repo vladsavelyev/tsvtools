@@ -11,27 +11,27 @@ if [ "$1" == "" ] || [ "$1" == "help" ] && [ "$2" == "" ]; then
     echo "    less    - Equivalent to 'view | less -S'"
     echo ""
     echo "See 'tabutils help CMD' for more information about a specific command"
-    exit -1
+    exit 1
 fi
 
-LIBS=`python -c 'import tsvtools, os; print(os.path.dirname(tsvtools.__file__))'`
+LIBS=$(python -c 'import tsvtools, os; print(os.path.dirname(tsvtools.__file__))')
 
 if [ "$1" == "help" ]; then
     action=tab_$2.py
-    if [ ! -e "$LIBS"/$action ]; then
+    if [ ! -e "$LIBS"/"${action}" ]; then
         echo "Unknown command '$2'"
         exit 1
     fi
-    python "$LIBS"/$action -h
+    python "$LIBS"/"${action}" -h
 elif [ "$1" == "less" ]; then
-    python "$LIBS"/tab_view.py $@ 2> /dev/null | less -S
+    python "$LIBS"/tab_view.py "$@" 2> /dev/null | less -S
 else
     action=tab_$1.py
-    if [ ! -e "$LIBS"/$action ]; then
+    if [ ! -e "$LIBS"/"${action}" ]; then
         echo "Unknown command '$1'"
         exit 1
     fi
     shift
 
-    python "$LIBS"/$action $@
+    python "$LIBS"/"${action}" "$@"
 fi
