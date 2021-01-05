@@ -5,7 +5,7 @@ pkg = 'tsvtools'
 
 setup(
     name=pkg,
-    version='0.1.0',
+    version='0.2.0',
     author='Vlad Savelyev',
     author_email='vladislav.sav@gmail.com',
     description='Utilities for operating with tab-separated files: viewing, filtering, reordering',
